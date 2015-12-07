@@ -44,28 +44,31 @@ public class Decryption {
     }
 
     public int[] createPrimeNumbers(){
-
         double sqrOfN;
         int j;
 
         primes[0] = 0;
-        primes[1] = 1;
+        primes[1] = 0;
 
         sqrOfN = Math.sqrt(Double.parseDouble(size));
 
         j = (int) Math.round(sqrOfN);
 
-        do{
+        boolean flag = true;
+
+        while(flag){
 
             if(isPrime(j)){
                 if(primes[0] == 0) primes[0] = j;
                 else if(primes[1] == 0) primes[1] = j;
             }
 
+            j +=1;
 
-            sqrOfN++;
-
-        }while(primes[0] != 0 && primes[1] != 0);
+            if(primes[0] != 0 && primes[1] != 0) {
+                flag = false;
+            }
+        }
 
         System.out.println("Found two primes: " + primes[0]+ " and " + primes[1]);
 

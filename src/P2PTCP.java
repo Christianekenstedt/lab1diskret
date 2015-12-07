@@ -47,6 +47,13 @@ public class P2PTCP{
             }
         }
         else if(args[0].equals("client")) {
+
+            Decryption dec = new Decryption("10");
+
+
+
+
+
             try{
                 int encryptionKey = 0;
                 String N;
