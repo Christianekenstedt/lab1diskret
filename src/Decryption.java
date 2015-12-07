@@ -7,22 +7,16 @@ public class Decryption {
 
     private String size;
     private int key;
-    private int publicKey = 3;
+    private int publicKey;
     private int privateKey;
     private int primes[] = new int[2];
 
     public Decryption(String N){
-
-        createKeys();
         this.size = N;
-        publicKey = getPublicKey();
         primes = createPrimeNumbers();
-    }
 
-    private void createKeys(){
-
-        publicKey=7;
-        privateKey=3;
+        publicKey = createPublicKey(size);
+        privateKey = createPrivateKey();
 
     }
 
@@ -89,13 +83,35 @@ public class Decryption {
     }
 
     private int createPublicKey(String N){
-        int e=0;
+        BigInteger first;
+        BigInteger relativtPrima;
+        BigInteger count;
         //Ta två primtal p och q som bildar > N.
 
 
+        Integer a = (primes[0]-1)*(primes[1]-1);
+        System.out.println("HERE A: " + a);
+
+        first = new BigInteger(a.toString());
+
+        boolean flag = true;
+        BigInteger i = BigInteger.ONE;
+
+        while(flag){
+
+            i = i.add(BigInteger.valueOf(1));
+
+            if(first.gcd(i).compareTo(BigInteger.valueOf(1)) == 0){
+                flag = false;
+            }
+
+        }
+
         //välj krypteringstalet så att e (publicKey) > 1 så att e och (p-1)(q-1) är relativt prima.
 
-        return e;
+        System.out.println("createPublicKey: " + i.toString());
+
+        return i.intValue();
     }
 
     private int createPrivateKey(){

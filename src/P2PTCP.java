@@ -48,7 +48,7 @@ public class P2PTCP{
         }
         else if(args[0].equals("client")) {
 
-            Decryption dec = new Decryption("10");
+            Decryption dec = new Decryption("100");
 
 
 
