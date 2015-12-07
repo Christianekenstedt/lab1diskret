@@ -29,8 +29,9 @@ public class P2PTCP{
                 String fromSocket = scan.nextLine();
                 System.out.println(fromSocket);
                 System.out.println(decrypt(fromSocket, 3,N));
-                while((fromSocket = scan.nextLine())!=null)
+                while((fromSocket = scan.nextLine())!=null){
                     System.out.println(fromSocket);
+                }
                 T = decrypt(fromSocket, 3, N);
                 System.out.println(T);
 
@@ -39,11 +40,51 @@ public class P2PTCP{
         }
         else if(args[0].equals("client")) {
             try{
+                ServerSocket ss = new ServerSocket(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+                System.out.println("Waiting for connection...");
+                peerConnectionSocket = ss.accept();
+
+
+                PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
+                out.println("7");
+                out.flush();
+                //N = args[2];
+                //out.println(N);
+                out.flush();
+                st = new Thread(new StringSender(out));
+
+
+                //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
+                //st.start();
+
+
+                scan = new Scanner (peerConnectionSocket.getInputStream());
+                String fromSocket;
+                while((fromSocket = scan.nextLine())!=null){
+                    System.out.println(fromSocket);
+                }
+            }catch(IOException e) {System.err.println("Server crash");}
+            finally {st.stop();}
+        }
+        else if(args[0].equals("client")) {
+            try{
+                int encryptionKey = 0;
+                int N;
                 peerConnectionSocket = new Socket(args[1], Integer.parseInt(args[2]));
 
-                st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
-                st.start();
                 scan = new Scanner (peerConnectionSocket.getInputStream());
+                encryptionKey = Integer.parseInt(scan.nextLine());
+                N = Integer.parseInt(scan.nextLine());
+                System.out.println("encryption key: "+encryptionKey);
+                System.out.println("N size: "+ N);
+
+                PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
+                out.println(encrypt("3", encryptionKey));
+                out.flush();
+
+                //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
+                //st.start();
+
                 String fromSocket;
                 while((fromSocket = scan.nextLine())!=null)
                     System.out.println(fromSocket);
