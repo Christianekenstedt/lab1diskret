@@ -32,8 +32,8 @@ public class P2PTCP{
                 scan = new Scanner(peerConnectionSocket.getInputStream());
 
                 String fromSocket = scan.nextLine();
-                System.out.println(fromSocket);
-                System.out.println("From class: "+decryp.decrypt(fromSocket));
+                System.out.println("Recived: " + fromSocket);
+                System.out.println("Decrypted to: "+decryp.decrypt(fromSocket));
 
 
                 while ((fromSocket = scan.nextLine()) != null) {

@@ -19,18 +19,13 @@ public class Decryption {
 
     private void createKeys(){
 
-        publicKey=3;
-        privateKey= 7;
+        publicKey=7;
+        privateKey=3;
 
     }
 
     public int getPublicKey(){
         return publicKey;
-    }
-
-
-    public int getEncrypt() {
-        return 1233123;
     }
 
     public String decrypt(String text){
@@ -46,4 +41,11 @@ public class Decryption {
         return T.toString();
     }
 
+    private int createPublicKey(){
+        return 0;
+    }
+
+    private int createPrivateKey(){
+        return 0;
+    }
 }
