@@ -41,11 +41,21 @@ public class Decryption {
         return T.toString();
     }
 
-    private int createPublicKey(){
-        return 0;
+    private int createPublicKey(String N){
+        int e=0;
+        //Ta två primtal p och q som bildar N.
+
+        //välj krypteringstalet så att e (publicKey) > 1 så att e och (p-1)(q-1) är relativt prima.
+
+        return e;
     }
 
     private int createPrivateKey(){
-        return 0;
+        int d=0; // Private Key.
+        // välj d så att d*e är kongurent med 1*(mod(p-1)(q-1))
+
+        return d;
     }
+
+
 }
