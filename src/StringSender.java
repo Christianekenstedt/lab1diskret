@@ -5,7 +5,7 @@ public class StringSender implements Runnable
 {
     private Scanner scan; private PrintWriter out;
     boolean cont = true;
-    
+
     public StringSender(PrintWriter out) {
 	this.out = out; scan = new Scanner(System.in);
     }
