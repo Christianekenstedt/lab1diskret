@@ -11,10 +11,10 @@ public class StringSender implements Runnable
     }
 
     public void run() {
-	while(cont==true) {
-	    System.out.print("Send > "); String str = scan.nextLine();
-	    out.println(str); out.flush();
-	}
+		while(cont==true) {
+			System.out.print("Send > "); String str = scan.nextLine();
+			out.println(str); out.flush();
+		}
     }
 
     public void stop(){cont=false;}
