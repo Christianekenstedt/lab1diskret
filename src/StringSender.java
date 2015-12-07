@@ -9,7 +9,7 @@ public class StringSender implements Runnable
     public StringSender(PrintWriter out) {
 	this.out = out; scan = new Scanner(System.in);
     }
-    
+
     public void run() {
 	while(cont==true) {
 	    System.out.print("Send > "); String str = scan.nextLine();
