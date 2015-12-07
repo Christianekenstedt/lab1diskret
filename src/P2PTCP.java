@@ -9,8 +9,8 @@ public class P2PTCP{
         Scanner scan; Thread st=null;
         Socket peerConnectionSocket=null;
         String T;
-        if(args[0].equals("server")){
-            try{
+        if(args[0].equals("server")) {
+            try {
                 ServerSocket ss = new ServerSocket(Integer.parseInt(args[1]));
                 System.out.println("Waiting for connection...");
                 peerConnectionSocket = ss.accept();
@@ -24,47 +24,22 @@ public class P2PTCP{
 
                 //st = new Thread(new StringSender(out));
                 //st.start();
-                scan = new Scanner (peerConnectionSocket.getInputStream());
+                scan = new Scanner(peerConnectionSocket.getInputStream());
 
                 String fromSocket = scan.nextLine();
                 System.out.println(fromSocket);
-                System.out.println(decrypt(fromSocket, 3,N));
-                while((fromSocket = scan.nextLine())!=null){
+                System.out.println(decrypt(fromSocket, 3, N));
+                while ((fromSocket = scan.nextLine()) != null) {
                     System.out.println(fromSocket);
                 }
                 T = decrypt(fromSocket, 3, N);
                 System.out.println(T);
 
-            }catch(IOException e) {System.err.println("Server crash");}
-            finally {st.stop();}
-        }
-        else if(args[0].equals("client")) {
-            try{
-                ServerSocket ss = new ServerSocket(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-                System.out.println("Waiting for connection...");
-                peerConnectionSocket = ss.accept();
-
-
-                PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
-                out.println("7");
-                out.flush();
-                //N = args[2];
-                //out.println(N);
-                out.flush();
-                st = new Thread(new StringSender(out));
-
-
-                //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
-                //st.start();
-
-
-                scan = new Scanner (peerConnectionSocket.getInputStream());
-                String fromSocket;
-                while((fromSocket = scan.nextLine())!=null){
-                    System.out.println(fromSocket);
-                }
-            }catch(IOException e) {System.err.println("Server crash");}
-            finally {st.stop();}
+            } catch (IOException e) {
+                System.err.println("Server crash");
+            } finally {
+                st.stop();
+            }
         }
         else if(args[0].equals("client")) {
             try{
@@ -94,7 +69,8 @@ public class P2PTCP{
         }
     }
     private static String decrypt(String text, Integer decryptKey, String size){
-        BigInteger N,C,T;
+        BigInteger N,C;
+        BigInteger T;
 
         N = new BigInteger(size);
         C = new BigInteger(text);
@@ -107,7 +83,7 @@ public class P2PTCP{
 
     private static String encrypt(String text, Integer key, String size){
         BigInteger T, C, N;
-        T = new BigInteger("0"); // here goes the number to be crypted (text).
+        T = new BigInteger("7"); // here goes the number to be crypted (text).
         N = new BigInteger(size);
 
         T = T.pow(key);
