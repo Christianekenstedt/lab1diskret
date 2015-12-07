@@ -69,17 +69,17 @@ public class P2PTCP{
         else if(args[0].equals("client")) {
             try{
                 int encryptionKey = 0;
-                int N;
+                String N;
                 peerConnectionSocket = new Socket(args[1], Integer.parseInt(args[2]));
 
                 scan = new Scanner (peerConnectionSocket.getInputStream());
                 encryptionKey = Integer.parseInt(scan.nextLine());
-                N = Integer.parseInt(scan.nextLine());
+                N = scan.nextLine();
                 System.out.println("encryption key: "+encryptionKey);
                 System.out.println("N size: "+ N);
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
-                out.println(encrypt("3", encryptionKey));
+                out.println(encrypt("3", encryptionKey, N));
                 out.flush();
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
@@ -93,7 +93,7 @@ public class P2PTCP{
             finally{st.stop();}
         }
     }
-    private static String decrypt(String text, int decryptKey, String size){
+    private static String decrypt(String text, Integer decryptKey, String size){
         BigInteger N,C,T;
 
         N = new BigInteger(size);
@@ -105,19 +105,15 @@ public class P2PTCP{
         return T.toString();
     }
 
-    private static String encrypt(String C, int E){
-        String encrypt="";
-        int key = E;
-        Integer T=0;
-        int temp;
+    private static String encrypt(String text, Integer key, String size){
+        BigInteger T, C, N;
+        T = new BigInteger("0"); // here goes the number to be crypted (text).
+        N = new BigInteger(size);
 
-        temp = Integer.parseInt(C);
-        T = temp^key;
-        T = (int)Math.pow(temp, key);
-        T=T%10;
+        T = T.pow(key);
+        C = T.mod(N);
 
-        encrypt = T.toString();
-        return encrypt;
+        return C.toString();
     }
 }
 
