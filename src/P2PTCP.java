@@ -48,13 +48,6 @@ public class P2PTCP{
             }
         }
         else if(args[0].equals("client")) {
-
-            Decryption dec = new Decryption("100");
-
-
-
-
-
             try{
                 int encryptionKey = 0;
                 String N;
@@ -70,7 +63,7 @@ public class P2PTCP{
                 Encryption enc = new Encryption(N, encryptionKey);
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
-                out.println(enc.encrypt("7"));
+                out.println(enc.encrypt("33"));
                 out.flush();
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
