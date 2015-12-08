@@ -19,6 +19,7 @@ public class P2PTCP{
                 System.out.println("Waiting for connection...");
                 peerConnectionSocket = ss.accept();
                 String N = args[2].toString();
+
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
 
                 out.println(Integer.toString(decryp.getPublicKey()));
@@ -37,7 +38,7 @@ public class P2PTCP{
 
 
                 while ((fromSocket = scan.nextLine()) != null) {
-                    System.out.println(fromSocket);
+                    System.out.println("Recived: " + fromSocket);
                 }
 
             } catch (IOException e) {
@@ -74,8 +75,8 @@ public class P2PTCP{
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
                 //st.start();
-
-                out.println(inputScan);
+                System.out.println();
+                out.println(inputScan.nextLine());
                 out.flush();
 
                 String fromSocket;
