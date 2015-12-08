@@ -75,9 +75,14 @@ public class P2PTCP{
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
                 //st.start();
-                System.out.println();
-                out.println(inputScan.nextLine());
-                out.flush();
+                String message = "";
+                while(!message.equals("exit")){
+                    System.out.println("Send: ");
+                    message = inputScan.nextLine();
+                    out.println(message);
+                    out.flush();
+                }
+
 
                 String fromSocket;
                 while((fromSocket = scan.nextLine())!=null)
