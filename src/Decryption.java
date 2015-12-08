@@ -19,6 +19,7 @@ public class Decryption {
 
         publicKey = createPublicKey(size);
         privateKey = createPrivateKey();
+       //privateKey = 2753;
 
     }
 
@@ -31,6 +32,7 @@ public class Decryption {
         BigInteger T;
 
         N = new BigInteger(size);
+        System.out.println("N is: " + N);
         C = new BigInteger(text);
 
         T = C.pow(privateKey);
@@ -92,7 +94,6 @@ public class Decryption {
 
 
         Integer a = (primes[0]-1)*(primes[1]-1);
-        System.out.println("HERE A: " + a);
 
         first = new BigInteger(a.toString());
 
@@ -117,12 +118,23 @@ public class Decryption {
     }
 
     private int createPrivateKey(){
-        int d=0; // Private Key.
+        BigInteger d; // Private Key.
         // välj d så att d*e är kongurent med 1*(mod(p-1)(q-1))
         // d*e ger resten 1 vid division med (p-1)(q-1)
+        BigInteger p = new BigInteger(Integer.toString(primes[0]));
+        BigInteger q = new BigInteger(Integer.toString(primes[1]));
+        BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
+        System.out.println("phi is " + phi);
+        BigInteger e;
 
+        e = new BigInteger(Integer.toString(publicKey));
+        //e = new BigInteger("65537");
+        //d = a.modInverse(new BigInteger(Integer.toString((primes[0]-1)*(primes[1]-1))));
+        d = e.modInverse(phi);
 
-        return d;
+        System.out.println("PrivateKey is "  +d.intValue());
+
+        return d.intValue();
     }
 
 
