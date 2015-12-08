@@ -18,13 +18,13 @@ public class P2PTCP{
                 ServerSocket ss = new ServerSocket(Integer.parseInt(args[1]));
                 System.out.println("Waiting for connection...");
                 peerConnectionSocket = ss.accept();
-                String N = args[2].toString();
+                String N = args[2].toString(); // size
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
 
-                out.println(Integer.toString(decryp.getPublicKey()));
+                out.println(Integer.toString(decryp.getPublicKey())); // Sends the new Generated public key
                 out.flush();
-                out.println(args[2]);
+                out.println(N); // Sends the size.
                 out.flush();
 
                 //st = new Thread(new StringSender(out));
@@ -48,13 +48,7 @@ public class P2PTCP{
             }
         }
         else if(args[0].equals("client")) {
-
             Decryption dec = new Decryption("100");
-
-
-
-
-
             try{
                 int encryptionKey = 0;
                 String N;
@@ -77,7 +71,8 @@ public class P2PTCP{
                 //st.start();
                 String message = "";
                 while(!message.equals("exit")){
-                    System.out.println("Send: ");
+                    System.out.println("Send an integer: ");
+
                     message = inputScan.nextLine();
                     out.println(message);
                     out.flush();
