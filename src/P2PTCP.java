@@ -37,7 +37,7 @@ public class P2PTCP{
                 System.out.println("Decrypted to: "+decryp.decrypt(fromSocket));
 
 
-                while ((fromSocket = scan.nextLine()) != null) {
+                while ((fromSocket = scan.nextLine()) != "exit") {
                     System.out.println("Recived: " + fromSocket);
                 }
 
@@ -84,9 +84,10 @@ public class P2PTCP{
                 }
 
 
-                String fromSocket;
+                /*String fromSocket;
                 while((fromSocket = scan.nextLine())!=null)
                     System.out.println(fromSocket);
+                */
             }
             catch(Exception e) {System.err.println("Client crash");}
             finally{st.stop();}
