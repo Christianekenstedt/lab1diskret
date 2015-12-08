@@ -57,6 +57,7 @@ public class P2PTCP{
             try{
                 int encryptionKey = 0;
                 String N;
+                Scanner inputScan = new Scanner(System.in);
                 peerConnectionSocket = new Socket(args[1], Integer.parseInt(args[2]));
 
                 scan = new Scanner (peerConnectionSocket.getInputStream());
@@ -73,6 +74,9 @@ public class P2PTCP{
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
                 //st.start();
+
+                out.println(inputScan);
+                out.flush();
 
                 String fromSocket;
                 while((fromSocket = scan.nextLine())!=null)
