@@ -1,4 +1,6 @@
 import java.math.BigInteger;
+import java.security.KeyPair;
+import java.security.PrivateKey;
 
 /**
  * Created by Gustaf on 2015-12-07.
@@ -117,7 +119,9 @@ public class Decryption {
     private int createPrivateKey(){
         int d=0; // Private Key.
         // välj d så att d*e är kongurent med 1*(mod(p-1)(q-1))
+        // d*e ger resten 1 vid division med (p-1)(q-1)
 
+        
         return d;
     }
 
