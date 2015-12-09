@@ -65,7 +65,7 @@ public class P2PTCP{
                 Encryption enc = new Encryption(N, encryptionKey);
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
-                out.println(enc.encrypt("123"));
+                out.println(enc.encrypt("1337"));
                 out.flush();
 
                 //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
@@ -75,7 +75,7 @@ public class P2PTCP{
                     System.out.println("Send an integer: ");
 
                     message = inputScan.nextLine();
-                    out.println(message);
+                    out.println(enc.encrypt(message));
                     out.flush();
                 }
 
