@@ -123,6 +123,7 @@ public class Decryption {
         // d*e ger resten 1 vid division med (p-1)(q-1)
         BigInteger p = new BigInteger(Integer.toString(primes[0]));
         BigInteger q = new BigInteger(Integer.toString(primes[1]));
+
         BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
         System.out.println("phi is " + phi);
         BigInteger e;
