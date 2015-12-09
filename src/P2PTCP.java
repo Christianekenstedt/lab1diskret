@@ -25,7 +25,6 @@ public class P2PTCP{
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
 
                 out.println(Integer.toString(decryp.getPublicKey())); // Sends the new Generated public key
-                //out.println("65537");
                 out.flush();
                 out.println(N); // Sends the size.
                 out.flush();
@@ -89,8 +88,54 @@ public class P2PTCP{
             catch(Exception e) {System.err.println("Client crash");}
             finally{st.stop();}
         }
+        else if(args[0].equals("test")){
+
+
+            String N = "99999999";
+
+            Decryption decryp = new Decryption(N);
+
+            Encryption enc = new Encryption(Integer.toString(decryp.getN()), decryp.getPublicKey());
+
+
+
+
+
+            System.out.println("Testing");
+
+
+
+            String number = "99999999";
+
+            System.out.println("Number to encrypt: " + number);
+
+            System.out.println("Number encrypted to: " + enc.encrypt(number));
+
+            System.out.println("Number to Decrypt: " + enc.encrypt(number));
+
+            System.out.println("Number Decrypted to: " + decryp.decrypt(enc.encrypt(number)));
+
+
+/*
+            int testSize = 9999999;
+            String tn = "";
+
+            for(int i=1; i<testSize; i++){
+                tn = Integer.toString(i);
+                if(!tn.equals(decryp.decrypt(enc.encrypt(tn)))){
+                    System.out.println("tn " + tn + " AND" + " decrypt " + decryp.decrypt(enc.encrypt(tn)) +" DOES NOT MATCH");
+                }
+            }
+            System.out.println("DONE!!!!");
+
+
+*/
+        }
+
+
 
     }
+
 
 }
 

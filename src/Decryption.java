@@ -3,7 +3,7 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 
 /**
- * Created by Gustaf on 2015-12-07.
+ * Created by Gustaf & Christian on 2015-12-07.
  */
 public class Decryption {
 
@@ -11,28 +11,29 @@ public class Decryption {
     private int key;
     private int publicKey;
     private int privateKey;
-    private int primes[] = new int[2];
+    private int primes[] = new int[3];
 
     public Decryption(String N){
-        this.size = N;
-        primes = createPrimeNumbers();
 
-        publicKey = createPublicKey(size);
+        primes = createPrimeNumbers(N);
+        this.size = Integer.toString(primes[2]);
+
+        publicKey = createPublicKey();
         privateKey = createPrivateKey();
-       //privateKey = 2753;
+
 
     }
 
     public int getPublicKey(){
         return publicKey;
     }
+    public int getN() {return primes[2]; }
 
     public String decrypt(String text){
         BigInteger N,C;
         BigInteger T;
 
         N = new BigInteger(size);
-        System.out.println("N is: " + N);
         C = new BigInteger(text);
 
         T = C.pow(privateKey);
@@ -41,7 +42,7 @@ public class Decryption {
         return T.toString();
     }
 
-    public int[] createPrimeNumbers(){
+    public int[] createPrimeNumbers(String size){
         double sqrOfN;
         int j;
 
@@ -64,6 +65,7 @@ public class Decryption {
             j +=1;
 
             if(primes[0] != 0 && primes[1] != 0) {
+                primes[2] = primes[0]*primes[1];
                 flag = false;
             }
         }
@@ -72,6 +74,8 @@ public class Decryption {
 
         return primes;
     }
+
+
 
     private boolean isPrime(int n){
 
@@ -86,16 +90,14 @@ public class Decryption {
 
     }
 
-    private int createPublicKey(String N){
+    private int createPublicKey(){
         BigInteger first;
-        BigInteger relativtPrima;
-        BigInteger count;
         //Ta två primtal p och q som bildar > N.
-
 
         Integer a = (primes[0]-1)*(primes[1]-1);
 
         first = new BigInteger(a.toString());
+
 
         boolean flag = true;
         BigInteger i = BigInteger.ONE;
