@@ -92,7 +92,6 @@ public class Decryption {
 
     private int createPublicKey(){
         BigInteger first;
-        //Ta två primtal p och q som bildar > N.
 
         Integer a = (primes[0]-1)*(primes[1]-1);
 
@@ -112,8 +111,6 @@ public class Decryption {
 
         }
 
-        //välj krypteringstalet så att e (publicKey) > 1 så att e och (p-1)(q-1) är relativt prima.
-
         System.out.println("createPublicKey: " + i.toString());
 
         return i.intValue();
@@ -121,21 +118,14 @@ public class Decryption {
 
     private int createPrivateKey(){
         BigInteger d; // Private Key.
-        // välj d så att d*e är kongurent med 1*(mod(p-1)(q-1))
-        // d*e ger resten 1 vid division med (p-1)(q-1)
         BigInteger p = new BigInteger(Integer.toString(primes[0]));
         BigInteger q = new BigInteger(Integer.toString(primes[1]));
 
         BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-        System.out.println("phi is " + phi);
         BigInteger e;
 
         e = new BigInteger(Integer.toString(publicKey));
-        //e = new BigInteger("65537");
-        //d = a.modInverse(new BigInteger(Integer.toString((primes[0]-1)*(primes[1]-1))));
         d = e.modInverse(phi);
-
-        System.out.println("PrivateKey is "  +d.intValue());
 
         return d.intValue();
     }
