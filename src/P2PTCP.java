@@ -20,7 +20,6 @@ public class P2PTCP{
                 ServerSocket ss = new ServerSocket(Integer.parseInt(args[1]));
                 System.out.println("Waiting for connection...");
                 peerConnectionSocket = ss.accept();
-                String N = args[2].toString(); // size
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
 
@@ -28,9 +27,6 @@ public class P2PTCP{
                 out.flush();
                 out.println(decryp.getN()); // Sends the size.
                 out.flush();
-
-                //st = new Thread(new StringSender(out));
-                //st.start();
 
                 scan = new Scanner(peerConnectionSocket.getInputStream());
 
@@ -50,7 +46,6 @@ public class P2PTCP{
             }
         }
         else if(args[0].equals("client")) {
-            Decryption dec = new Decryption("100");
             try{
                 int encryptionKey = 0;
                 String N;
@@ -64,13 +59,11 @@ public class P2PTCP{
                 System.out.println("N size: "+ N);
 
                 Encryption enc = new Encryption(N, encryptionKey);
-
+                Integer rnd = 0 + (int)(Math.random()*100);
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
-                out.println(enc.encrypt("1337"));
+                out.println(enc.encrypt(Integer.toString(rnd)));
                 out.flush();
 
-                //st = new Thread(new StringSender(new PrintWriter(peerConnectionSocket.getOutputStream())));
-                //st.start();
                 String message = "";
                 while(!message.equals("exit")){
                     System.out.println("Send an integer: ");
@@ -89,52 +82,6 @@ public class P2PTCP{
             catch(Exception e) {System.err.println("Client crash");}
             finally{st.stop();}
         }
-        else if(args[0].equals("test")){
-
-
-            String N = "99999999";
-
-            Decryption decryp = new Decryption(N);
-
-            Encryption enc = new Encryption(Integer.toString(decryp.getN()), decryp.getPublicKey());
-
-
-
-
-
-            System.out.println("Testing");
-
-
-
-            String number = "99999999";
-
-            System.out.println("Number to encrypt: " + number);
-
-            System.out.println("Number encrypted to: " + enc.encrypt(number));
-
-            System.out.println("Number to Decrypt: " + enc.encrypt(number));
-
-            System.out.println("Number Decrypted to: " + decryp.decrypt(enc.encrypt(number)));
-
-
-
-            int testSize = 9999999;
-            String tn = "";
-
-            for(int i=1; i<testSize; i++){
-                tn = Integer.toString(i);
-                if(!tn.equals(decryp.decrypt(enc.encrypt(tn)))){
-                    System.out.println("tn " + tn + " AND" + " decrypt " + decryp.decrypt(enc.encrypt(tn)) +" DOES NOT MATCH");
-                }
-            }
-            System.out.println("DONE!!!!");
-
-
-
-        }
-
-
-
     }
 
 
