@@ -25,7 +25,7 @@ public class P2PTCP{
 
                 out.println(decryp.getPublicKey()); // Sends the new Generated public key
                 out.flush();
-                out.println(decryp.getN()); // Sends the size.
+                out.println(decryp.getCalculatedN()); // Sends the size.
                 out.flush();
 
                 scan = new Scanner(peerConnectionSocket.getInputStream());
@@ -36,7 +36,7 @@ public class P2PTCP{
 
                 while ((fromSocket = scan.nextLine()) != "exit") {
                     System.out.println("Recived: " + fromSocket);
-                    System.out.println("Encrypted to: "+ decryp.decrypt(fromSocket));
+                    System.out.println("Decrypted to: "+ decryp.decrypt(fromSocket));
                 }
 
             } catch (IOException e) {

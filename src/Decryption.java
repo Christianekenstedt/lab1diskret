@@ -8,9 +8,9 @@ import java.security.PrivateKey;
 public class Decryption {
 
     private String size;
-    BigInteger sizeN;
-    BigInteger p;
-    BigInteger q;
+    private BigInteger sizeN;
+    private BigInteger p;
+    private BigInteger q;
     private int key;
     private BigInteger publicKey;
     private BigInteger privateKey;
@@ -18,8 +18,9 @@ public class Decryption {
 
     public Decryption(String N){
 
-        primes = createPrimeNumbers(N);
-        this.size = Integer.toString(primes[2]);
+        createPrimeNumbers(N);
+
+        sizeN = p.multiply(q);
 
         publicKey = createPublicKey();
         privateKey = createPrivateKey();
@@ -30,36 +31,28 @@ public class Decryption {
     public BigInteger getPublicKey(){
         return publicKey;
     }
-    public int getN() {return primes[2]; }
+    public BigInteger getCalculatedN() {return (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE)); }
 
     public String decrypt(String text){
-        BigInteger N,C;
+        BigInteger C;
         BigInteger T;
-
-        N = new BigInteger(size);
         C = new BigInteger(text);
-
-        T = C.pow(privateKey.intValue()); // FIXA!!
-        T = T.mod(N);
-
+        T = C.modPow(privateKey,sizeN);
         return T.toString();
     }
 
-    public int[] createPrimeNumbers(String size){
-        double sqrOfN;
-        int j;
+    public void createPrimeNumbers(String size){
+
         p = new BigInteger("2");
         q = new BigInteger("1");
-        sizeN = new BigInteger(size);
-        System.out.println(sizeN);
-        while( (p.multiply(q)).compareTo(sizeN) == -1 ){
-            q = q.nextProbablePrime();
+
+        while( (p.multiply(q)).compareTo(new BigInteger(size)) == -1 ){
+            q =q.nextProbablePrime();
+            p = p.multiply(new BigInteger("2"));
             p = q.nextProbablePrime();
         }
 
         System.out.println("Found two primes: " + p+ " and " + q);
-
-
 
 
         /*primes[0] = 0;
@@ -89,8 +82,6 @@ public class Decryption {
 
 
         //System.out.println("Found two primes: " + primes[0]+ " and " + primes[1]);
-
-        return primes;
     }
 
 
@@ -111,22 +102,17 @@ public class Decryption {
     private BigInteger createPublicKey(){
         BigInteger first;
 
-        Integer a = (primes[0]-1)*(primes[1]-1);
-
-        //first = new BigInteger(a.toString());
         first = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
 
         boolean flag = true;
         BigInteger i = BigInteger.ONE;
 
         while(flag){
-
             i = i.add(BigInteger.valueOf(1));
 
             if(first.gcd(i).compareTo(BigInteger.valueOf(1)) == 0){
                 flag = false;
             }
-
         }
 
         System.out.println("createPublicKey: " + i.toString());
@@ -136,17 +122,14 @@ public class Decryption {
 
     private BigInteger createPrivateKey(){
         BigInteger d; // Private Key.
-        BigInteger p = new BigInteger(Integer.toString(primes[0]));
-        BigInteger q = new BigInteger(Integer.toString(primes[1]));
 
         BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-        BigInteger e;
 
-        e = publicKey;
-        d = e.modInverse(phi);
+        d = publicKey.modInverse(phi);
+
+        System.out.println("privateKey = " + d);
 
         return d;
     }
-
 
 }
