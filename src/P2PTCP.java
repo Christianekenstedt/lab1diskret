@@ -23,7 +23,7 @@ public class P2PTCP{
 
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
 
-                out.println(Integer.toString(decryp.getPublicKey())); // Sends the new Generated public key
+                out.println(decryp.getPublicKey()); // Sends the new Generated public key
                 out.flush();
                 out.println(decryp.getN()); // Sends the size.
                 out.flush();
@@ -42,18 +42,17 @@ public class P2PTCP{
             } catch (IOException e) {
                 System.err.println("Server crash");
             } finally {
-                st.stop();
+               // st.stop();
             }
         }
         else if(args[0].equals("client")) {
             try{
-                int encryptionKey = 0;
                 String N;
                 Scanner inputScan = new Scanner(System.in);
                 peerConnectionSocket = new Socket(args[1], Integer.parseInt(args[2]));
 
                 scan = new Scanner (peerConnectionSocket.getInputStream());
-                encryptionKey = Integer.parseInt(scan.nextLine());
+                BigInteger encryptionKey = new BigInteger(scan.nextLine());
                 N = scan.nextLine();
                 System.out.println("encryption key: "+encryptionKey);
                 System.out.println("N size: "+ N);

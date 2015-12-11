@@ -6,9 +6,9 @@ import java.math.BigInteger;
 public class Encryption {
 
     String size;
-    int key;
+    BigInteger key;
 
-    public Encryption(String N, int key){
+    public Encryption(String N, BigInteger key){
 
         this.size = N;
         this.key = key;
@@ -20,7 +20,7 @@ public class Encryption {
         T = new BigInteger(text); // here goes the number to be crypted (text).
         N = new BigInteger(size);
 
-        T = T.pow(key);
+        T = T.pow(key.intValue()); // FIXA!!!!
         C = T.mod(N);
 
         return C.toString();
