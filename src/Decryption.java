@@ -31,7 +31,7 @@ public class Decryption {
     public BigInteger getPublicKey(){
         return publicKey;
     }
-    public BigInteger getCalculatedN() {return (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE)); }
+    public BigInteger getCalculatedN() {return (p).multiply(q); }
 
     public String decrypt(String text){
         BigInteger C;
@@ -103,7 +103,7 @@ public class Decryption {
         BigInteger first;
 
         first = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-
+        System.out.println("phi: " + first);
         boolean flag = true;
         BigInteger i = BigInteger.ONE;
 

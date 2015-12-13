@@ -57,7 +57,7 @@ public class P2PTCP{
                 System.out.println("encryption key: "+encryptionKey);
                 System.out.println("N size: "+ N);
 
-                Encryption enc = new Encryption(N, encryptionKey);
+                Encryption enc = new Encryption(new BigInteger(N), encryptionKey);
                 Integer rnd = 0 + (int)(Math.random()*100);
                 PrintWriter out = new PrintWriter(peerConnectionSocket.getOutputStream());
                 out.println(enc.encrypt(Integer.toString(rnd)));
@@ -80,6 +80,17 @@ public class P2PTCP{
             }
             catch(Exception e) {System.err.println("Client crash");}
             finally{st.stop();}
+        }else if (args[0].equals("test")){
+            Decryption dec = new Decryption(args[1]);
+            BigInteger e = dec.getPublicKey();
+
+            String text = "123";
+            Encryption enc = new Encryption(dec.getCalculatedN(), e);
+            String crypted = enc.encrypt(text);
+            System.out.println("Crypted to: " + crypted);
+            System.out.println("Decrypted to:"+ dec.decrypt(crypted));
+
+
         }
     }
 

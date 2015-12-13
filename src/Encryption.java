@@ -5,10 +5,10 @@ import java.math.BigInteger;
  */
 public class Encryption {
 
-    String size;
+    BigInteger size;
     BigInteger key;
 
-    public Encryption(String N, BigInteger key){
+    public Encryption(BigInteger N, BigInteger key){
 
         this.size = N;
         this.key = key;
@@ -18,7 +18,7 @@ public class Encryption {
     public String encrypt(String text){
         BigInteger T, C, N;
         T = new BigInteger(text); // here goes the number to be crypted (text).
-        N = new BigInteger(size);
+        N = size;
 
         T = T.pow(key.intValue()); // FIXA!!!!
         C = T.mod(N);
