@@ -20,8 +20,10 @@ public class Encryption {
         T = new BigInteger(text); // here goes the number to be crypted (text).
         N = size;
 
-        T = T.pow(key.intValue()); // FIXA!!!!
-        C = T.mod(N);
+        //T = T.pow(key.intValue()); // FIXA!!!!
+        //C = T.mod(N);
+
+        C = T.modPow(key,N);
 
         return C.toString();
     }
