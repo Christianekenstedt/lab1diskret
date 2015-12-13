@@ -47,9 +47,11 @@ public class Decryption {
         q = new BigInteger("1");
 
         while( (p.multiply(q)).compareTo(new BigInteger(size)) == -1 ){
-            q =q.nextProbablePrime();
             p = p.multiply(new BigInteger("2"));
-            p = q.nextProbablePrime();
+            p = p.nextProbablePrime();
+            q = p.nextProbablePrime();
+
+            //p = q.nextProbablePrime();
         }
 
         System.out.println("Found two primes: " + p+ " and " + q);
